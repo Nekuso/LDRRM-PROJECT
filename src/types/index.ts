@@ -125,6 +125,7 @@ export type allPurchaseRequestsDisplay = {
   requester_contact_number: string;
   requester_email: string;
   coordinates: string;
+  calamity_type: string;
   employees: {
     id: number;
     first_name: string;
@@ -134,11 +135,11 @@ export type allPurchaseRequestsDisplay = {
     email: string;
     roles: { role: string };
   };
-  calamity_types: {
-    id: number;
-    name: string;
-    description: string;
-  };
+  // calamity_types: {
+  //   id: number;
+  //   name: string;
+  //   description: string;
+  // };
   rescuer_entries: {
     id: number;
     rescuer: {

@@ -74,45 +74,45 @@ export default function RequestForm({ setDialogOpen }: any) {
 
   //Debugging zone
 
-  const rescuersFromState = useSelector(
-    (state: any) => state.allEmployees.allRescuers
-  );
+  // const rescuersFromState = useSelector(
+  //   (state: any) => state.allEmployees.allRescuers
+  // );
 
-  const allRescuers = rescuersFromState
-    ? rescuersFromState
-        .map((rescuer: any) => ({
-          value: rescuer.id,
-          label: rescuer.first_name + " " + rescuer.last_name,
-        }))
-        .filter((rescuer: any) => rescuer.value !== currentUser.id)
-        .filter((rescuer: any) => {
-          if (currentUser.roles.role === "Administrator") {
-            return true;
-          } else {
-            return true;
-          }
-        })
-    : [];
+  // const allRescuers = rescuersFromState
+  //   ? rescuersFromState
+  //       .map((rescuer: any) => ({
+  //         value: rescuer.id,
+  //         label: rescuer.first_name + " " + rescuer.last_name,
+  //       }))
+  //       .filter((rescuer: any) => rescuer.value !== currentUser.id)
+  //       .filter((rescuer: any) => {
+  //         if (currentUser.roles.role === "Administrator") {
+  //           return true;
+  //         } else {
+  //           return true;
+  //         }
+  //       })
+  //   : [];
 
-  const calamitytypesFromState = useSelector(
-    (state: any) => state.allEmployees.allCalamityTypes
-  );
+  // const calamitytypesFromState = useSelector(
+  //   (state: any) => state.allEmployees.allCalamityTypes
+  // );
 
-  const allCalamityTypes = calamitytypesFromState
-    ? calamitytypesFromState
-        .map((calamity: any) => ({
-          value: calamity.id,
-          label: calamity.name,
-        }))
-        .filter((calamity: any) => calamity.value !== currentUser.id)
-        .filter((calamity: any) => {
-          if (currentUser.roles.role === "Administrator") {
-            return true;
-          } else {
-            return true;
-          }
-        })
-    : [];
+  // const allCalamityTypes = calamitytypesFromState
+  //   ? calamitytypesFromState
+  //       .map((calamity: any) => ({
+  //         value: calamity.id,
+  //         label: calamity.name,
+  //       }))
+  //       .filter((calamity: any) => calamity.value !== currentUser.id)
+  //       .filter((calamity: any) => {
+  //         if (currentUser.roles.role === "Administrator") {
+  //           return true;
+  //         } else {
+  //           return true;
+  //         }
+  //       })
+  //   : [];
 
   //Debugging zone
 
@@ -120,24 +120,22 @@ export default function RequestForm({ setDialogOpen }: any) {
 
   const [minTotalPrice] = useState(0);
 
-  const RequestSchema: any = z.object({
-    requester_first_name: z.string().nullable(),
-    requester_last_name: z.string().nullable(),
-    requester_email: z.string().nullable(),
-    requester_contact_number: z.coerce.number().nullable(),
+  const RequestSchema = z.object({
+    requester_first_name: z.string(),
+    requester_last_name: z.string(),
+    // requester_email: z.string(),
+    requester_contact_number: z.string(),
+    calamity_type: z.string(),
     status: z.string(),
-    total_stocks_used: z.coerce.number().nullable(),
-    employee_id: z.string(),
-    rescuer_id: z.string(),
-    calamity_types_id: z.string(),
     coordinates: z.string(),
+    employee_id: z.coerce.number().nullable(),
 
     use_equipments: z.array(
       z.object({
         equipment_id: z.coerce.number(),
         name: z.string(),
         description: z.string(),
-        image_url: z.string(),
+        // image_url: z.string(),
         quantity: z.coerce.number(),
       })
     ),
@@ -146,7 +144,7 @@ export default function RequestForm({ setDialogOpen }: any) {
         foodsupply_id: z.coerce.number(),
         name: z.string(),
         description: z.string(),
-        image_url: z.string(),
+        // image_url: z.string(),
         quantity: z.coerce.number(),
       })
     ),
@@ -155,34 +153,34 @@ export default function RequestForm({ setDialogOpen }: any) {
         vehicle_id: z.coerce.number(),
         name: z.string(),
         description: z.string(),
-        image_url: z.string(),
+        // image_url: z.string(),
         quantity: z.coerce.number(),
       })
     ),
-    rescuer_entries: z.array(
-      z.object({
-        request_id: z.coerce.number(),
-        employee_id: z.coerce.number(),
-      })
-    ),
+    // rescuer_entries: z.array(
+    //   z.object({
+    //     request_id: z.coerce.number(),
+    //     employee_id: z.coerce.number(),
+    //   })
+    // ),
   });
   const form = useForm<z.infer<typeof RequestSchema>>({
     resolver: zodResolver(RequestSchema),
     defaultValues: {
       requester_first_name: "",
       requester_last_name: "",
-      requester_email: "",
-      requester_contact_number: 0,
-      employee_id: "",
-      rescuer_id: "",
-      calamity_types_id: "",
-      total_stocks_used: 0,
+      // requester_email: "",
+      requester_contact_number: "",
+      employee_id: null,
+      // rescuer_id: "",
+      calamity_type: "",
+      // total_stocks_used: 0,
       use_equipments: [],
       use_foodsupplies: [],
       use_vehicles: [],
+      // rescuer_entries: [],
       status: "Completed",
       coordinates: "",
-      rescuer_entries: [],
     },
   });
 
@@ -199,44 +197,44 @@ export default function RequestForm({ setDialogOpen }: any) {
   form.setValue("use_equipments", requestCart.equipmentsCart);
   form.setValue("use_foodsupplies", requestCart.foodsuppliesCart);
   form.setValue("use_vehicles", requestCart.vehiclesCart);
-  form.setValue(
-    "total_stocks_used",
-    (
-      requestCart.equipmentsCart.reduce(
-        (acc: any, equipment: any) => acc + equipment.quantity,
-        0
-      ) +
-      requestCart.foodsuppliesCart.reduce(
-        (acc: any, foodsupply: any) => acc + foodsupply.quantity,
-        0
-      ) +
-      requestCart.vehiclesCart.reduce(
-        (acc: any, vehicle: any) => acc + vehicle.quantity,
-        0
-      )
-    ).toFixed(3)
-  );
-  form.setValue(
-    "total_price",
-    Number(
-      (
-        requestCart.equipmentsCart.reduce(
-          (acc: any, equipment: any) => acc + equipment.quantity,
-          0
-        ) +
-        requestCart.foodsuppliesCart.reduce(
-          (acc: any, foodsupply: any) => acc + foodsupply.quantity,
-          0
-        ) +
-        requestCart.vehiclesCart.reduce(
-          (acc: any, vehicle: any) => acc + vehicle.quantity,
-          0
-        )
-      )
-        .toFixed(3)
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    )
-  );
+  // form.setValue(
+  //   "total_stocks_used",
+  //   (
+  //     requestCart.equipmentsCart.reduce(
+  //       (acc: any, equipment: any) => acc + equipment.quantity,
+  //       0
+  //     ) +
+  //     requestCart.foodsuppliesCart.reduce(
+  //       (acc: any, foodsupply: any) => acc + foodsupply.quantity,
+  //       0
+  //     ) +
+  //     requestCart.vehiclesCart.reduce(
+  //       (acc: any, vehicle: any) => acc + vehicle.quantity,
+  //       0
+  //     )
+  //   ).toFixed(3)
+  // );
+  // form.setValue(
+  //   "total_price",
+  //   Number(
+  //     (
+  //       requestCart.equipmentsCart.reduce(
+  //         (acc: any, equipment: any) => acc + equipment.quantity,
+  //         0
+  //       ) +
+  //       requestCart.foodsuppliesCart.reduce(
+  //         (acc: any, foodsupply: any) => acc + foodsupply.quantity,
+  //         0
+  //       ) +
+  //       requestCart.vehiclesCart.reduce(
+  //         (acc: any, vehicle: any) => acc + vehicle.quantity,
+  //         0
+  //       )
+  //     )
+  //       .toFixed(3)
+  //       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  //   )
+  // );
   [
     requestCart.foodsuppliesCart,
     requestCart.equipmentsCart,
@@ -384,7 +382,7 @@ export default function RequestForm({ setDialogOpen }: any) {
                         </div>
                       </div>
                       <div className="w-full flex gap-4">
-                        <div className="w-[75%] flex flex-col ">
+                        {/* <div className="w-[75%] flex flex-col ">
                           <FormField
                             control={form.control}
                             name="requester_email"
@@ -404,23 +402,23 @@ export default function RequestForm({ setDialogOpen }: any) {
                               </FormItem>
                             )}
                           />
-                        </div>
+                        </div> */}
                         <div className="w-[75%] flex flex-col">
                           <FormField
                             control={form.control}
-                            name="use_calamity_types"
+                            name="calamity_type"
                             render={({ field }) => (
-                              <FormItem className="w-full">
+                              <FormItem>
                                 <FormLabel className="text-xs">
-                                  Calamity Types
+                                  Calamity Type
                                 </FormLabel>
-                                <FormControl className="bg-white">
-                                  <MultiSelectFormField
-                                    options={allCalamityTypes}
-                                    defaultValue={field.value}
-                                    onValueChange={field.onChange}
-                                    placeholder="Select Calamity Types"
-                                    animation={2}
+                                <FormControl>
+                                  <Input
+                                    className="rounded-lg bg-lightComponentBg border-slate-600/50"
+                                    {...field}
+                                    type="text"
+                                    placeholder="Enter the calamity type"
+                                    value={field.value || ""}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -428,7 +426,7 @@ export default function RequestForm({ setDialogOpen }: any) {
                             )}
                           />
                         </div>
-                        <div className="w-full flex flex-col ">
+                        {/* <div className="w-[75%] flex flex-col">
                           <FormField
                             control={form.control}
                             name="rescuer_entries"
@@ -450,30 +448,30 @@ export default function RequestForm({ setDialogOpen }: any) {
                               </FormItem>
                             )}
                           />
+                        </div>    */}
+                        <div className="w-[75%] flex flex-col">
+                          <FormField
+                            control={form.control}
+                            name="coordinates"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-xs">
+                                  Coordinates
+                                </FormLabel>
+                                <FormControl>
+                                  <Input
+                                    className="rounded-lg bg-lightComponentBg border-slate-600/50"
+                                    {...field}
+                                    type="text"
+                                    placeholder="Enter the coordinates"
+                                    value={field.value || ""}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                         </div>
-                      </div>
-                      <div className="w-[29%] flex flex-col">
-                        <FormField
-                          control={form.control}
-                          name="coordinates"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">
-                                Coordinates
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  className="rounded-lg bg-lightComponentBg border-slate-600/50"
-                                  {...field}
-                                  type="text"
-                                  placeholder="Enter the coordinates"
-                                  value={field.value || ""}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
                       </div>
                     </div>
                   </AccordionContent>

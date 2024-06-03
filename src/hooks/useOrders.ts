@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { useState } from "react";
+import { use, useState } from "react";
 
 export const useRequests: any = () => {
   const supabase = createClient(
@@ -10,18 +10,32 @@ export const useRequests: any = () => {
   const [currentRequestData, setCurrentRequestData] = useState<any>([]);
 
   const createRequest = async (props: any, duration?: any) => {
+    console.log("Props:", props); // Log the props object
+
+    // Check if the employees_id exists in the "employees" table
+    const { data: employeeData, error: employeeError } = await supabase
+      .from("employees")
+      .select("id")
+      .eq("id", props.employees_id);
+
+    if (employeeError || !employeeData.length) {
+      return { error: "Invalid employees_id" };
+    }
+
     const result: any = await supabase
       .from("requests")
       .insert({
         requester_first_name: props.requester_first_name,
         requester_last_name: props.requester_last_name,
         requester_contact_number: props.requester_contact_number,
-        requester_email: props.requester_email,
-        status: props.status,
-        employee_id: props.employee_id,
+        status: "Ongoing",
         coordinates: props.coordinates,
+        calamity_type: props.calamity_type,
+        employees_id: props.employees_id,
       })
       .select();
+
+    console.log("Result:", result); // Log the result object
 
     if (result.error) {
       return result.error;
@@ -70,13 +84,6 @@ export const useRequests: any = () => {
       )
       .select();
 
-    const rescuerResult = await supabase.from("rescuer_entries").insert(
-      props.rescuer_entries.map((rescuer: any) => ({
-        order_id: result.data[0].id,
-        employee_id: rescuer,
-      }))
-    );
-
     await new Promise((resolve) => setTimeout(resolve, duration));
 
     return result;
@@ -89,7 +96,7 @@ export const useRequests: any = () => {
     const { data, error } = await supabase
       .from("requests")
       .select(
-        'id,created_at, status, requester_first_name, requester_last_name, coordinates, employees(id, first_name, last_name, image_url, contact_number, email, roles(role)), use_calamity_types(id, name, description),rescuer_entries("*",rescuer:employees!rescuer_entries_employee_id_fkey(id,first_name,last_name,image_url,contact_number,email,roles(role)))'
+        "id,created_at, status, requester_first_name, requester_last_name, coordinates, employees(id, first_name, last_name, image_url, contact_number, email, roles(role)), calamity_type,"
       )
       .order("created_at", { ascending: false });
 
@@ -121,58 +128,40 @@ export const useRequests: any = () => {
             role
           )
         ),
-        use_food_supplies(
+        use_foodsupplies(
           id,
-          product_id,
+          foodsupply_id,
           name,
           description,
-          barcode,
+    
           image_url,
-          price,
+ 
           quantity,
-          uom_name
+      
         ),
         use_equipments(
           id,
-          part_id,
+          equipment_id,
           name,
           description,
-          barcode,
+    
           image_url,
-          price,
+      
           quantity,
-          brand
+     
         ),
         use_vehicles(
           id,
-          part_id,
+          vehicle_id,
           name,
           description,
-          barcode,
+     plate_number,
           image_url,
-          price,
+      
           quantity,
-          brand
+         
         ),
-        use_calamity_types(
-          id,
-          name,
-          description,
-          image_url,
-        ),
-        rescuer_entries("*",
-          rescuer:employees!rescuer_entries_employee_id_fkey(
-            id,
-            first_name,
-            last_name,
-            image_url,
-            contact_number,
-            email,
-            roles(
-              role
-            )
-          )
-        ),
+        calamity_type,
 
         status,
         created_at
@@ -193,10 +182,7 @@ export const useRequests: any = () => {
         name: props.name,
         description: props.description,
         image_url: props.image_url,
-        barcode: props.barcode,
-        uom_id: props.uom_id,
         stock_quantity: props.stock_quantity,
-        price: props.price,
         status: props.status,
       })
       .eq("id", props.id);
