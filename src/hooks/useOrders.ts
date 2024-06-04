@@ -18,7 +18,10 @@ export const useRequests: any = () => {
       .select("id")
       .eq("id", props.employees_id);
 
+    console.log("Employee Data:", employeeData); // Log the employee data
+
     if (employeeError || !employeeData.length) {
+      console.error("Employee Error:", employeeError); // Log the employee error
       return { error: "Invalid employees_id" };
     }
 
@@ -35,9 +38,10 @@ export const useRequests: any = () => {
       })
       .select();
 
-    console.log("Result:", result); // Log the result object
+    console.log("Insert Result:", result); // Log the insert result
 
     if (result.error) {
+      console.error("Insert Error:", result.error); // Log the insert error
       return result.error;
     }
 
@@ -55,6 +59,8 @@ export const useRequests: any = () => {
       )
       .select();
 
+    console.log("Food Supply Result:", foodsupplyResult); // Log the food supply result
+
     const vehicleResult = await supabase
       .from("use_vehicles")
       .insert(
@@ -70,6 +76,8 @@ export const useRequests: any = () => {
       )
       .select();
 
+    console.log("Vehicle Result:", vehicleResult); // Log the vehicle result
+
     const EquipmentResult = await supabase
       .from("use_equipments")
       .insert(
@@ -84,10 +92,13 @@ export const useRequests: any = () => {
       )
       .select();
 
+    console.log("Equipment Result:", EquipmentResult); // Log the equipment result
+
     await new Promise((resolve) => setTimeout(resolve, duration));
 
     return result;
   };
+
   const getRequests = async (props?: any) => {
     if (props?.roles?.role !== "Administrator") {
       return;
@@ -100,7 +111,10 @@ export const useRequests: any = () => {
       )
       .order("created_at", { ascending: false });
 
+    console.log("Get Requests Data:", data); // Log the get requests data
+
     if (error) {
+      console.error("Get Requests Error:", error); // Log the get requests error
       return error;
     }
 
@@ -132,10 +146,7 @@ export const useRequests: any = () => {
           id,
           foodsupply_id,
           name,
-          description,
-    
-          image_url,
- 
+          description,   
           quantity,
       
         ),
@@ -144,11 +155,7 @@ export const useRequests: any = () => {
           equipment_id,
           name,
           description,
-    
-          image_url,
-      
-          quantity,
-     
+          quantity, 
         ),
         use_vehicles(
           id,
@@ -156,13 +163,9 @@ export const useRequests: any = () => {
           name,
           description,
      plate_number,
-          image_url,
-      
-          quantity,
-         
+          quantity,     
         ),
         calamity_type,
-
         status,
         created_at
     `
