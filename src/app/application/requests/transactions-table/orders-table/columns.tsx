@@ -151,7 +151,7 @@ export const initialState = (branches: any) => {
     {
       id: "id",
       accessorKey: "calamity_types",
-      header: "Calamity Type",
+      header: "Incident",
       cell: ({ row }) => {
         return (
           <p className="max-w-[110px] 2xl:max-w-[220px] truncate">

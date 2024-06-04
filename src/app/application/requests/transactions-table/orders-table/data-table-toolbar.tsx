@@ -34,10 +34,16 @@ export function DataTableToolbar<TData>({
       <div className="flex flex-1 items-center space-x-2 flex-wrap gap-y-2">
         <Input
           className="w-[200px] 2xl:w-[250px] h-10 border border-slate-400 rounded-lg text-black"
-          placeholder="Find Request ID"
-          value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
+          placeholder="Find requester name"
+          value={
+            (table
+              .getColumn("requester_first_name")
+              ?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("id")?.setFilterValue(event.target.value)
+            table
+              .getColumn("requester_first_name")
+              ?.setFilterValue(event.target.value)
           }
         />
 
