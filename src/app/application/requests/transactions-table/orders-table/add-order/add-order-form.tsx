@@ -62,6 +62,7 @@ import { TooltipContent } from "@/components/ui/tooltip";
 
 export default function RequestForm({ setDialogOpen }: any) {
   const currentUser = useSelector((state: any) => state.currentSession);
+  console.log(currentUser);
   const [isPending, startTransition] = useTransition();
   const { createRequest } = useRequests();
   const dispatch = useDispatch();
@@ -128,7 +129,7 @@ export default function RequestForm({ setDialogOpen }: any) {
     calamity_type: z.string(),
     status: z.string(),
     coordinates: z.string(),
-    employee_id: z.coerce.number().nullable(),
+    employee_id: z.string(),
 
     use_equipments: z.array(
       z.object({
@@ -171,7 +172,7 @@ export default function RequestForm({ setDialogOpen }: any) {
       requester_last_name: "",
       // requester_email: "",
       requester_contact_number: "",
-      employee_id: null,
+      employee_id: currentUser.id,
       // rescuer_id: "",
       calamity_type: "",
       // total_stocks_used: 0,

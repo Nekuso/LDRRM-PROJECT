@@ -127,21 +127,21 @@ export const initialState = (branches: any) => {
           <div className="flex place-items-center gap-2">
             <Avatar className="w-10 h-10 cursor-pointer z-0 rounded-md">
               <AvatarImage
-                src={row.original.employees.image_url}
-                alt={row.original.employees.first_name}
+                src={row.original.employees?.image_url}
+                alt={row.original.employees?.first_name}
               />
               <AvatarFallback className="bg-slate-500 rounded-md text-white">
-                {row.original.employees.first_name[0]}
+                {row.original.employees?.first_name[0]}
               </AvatarFallback>
             </Avatar>
 
             <div className="flex flex-col">
               <p className="max-w-[100px] 2xl:max-w-[220px] truncate font-semibold">
-                {row.original.employees.first_name}{" "}
-                {row.original.employees.last_name}
+                {row.original.employees?.first_name}{" "}
+                {row.original.employees?.last_name}
               </p>
               <p className="max-w-[181px] truncate text-slate-500">
-                {row.original.employees.roles.role}
+                {row.original.employees?.roles.role}
               </p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export const initialState = (branches: any) => {
       cell: ({ row }) => {
         return (
           <p className="max-w-[110px] 2xl:max-w-[220px] truncate">
-            {row.original.calamity_types.name}
+            {row.original.calamity_type}
           </p>
         );
       },
