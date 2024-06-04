@@ -66,7 +66,7 @@ export default async function RootLayout({
           </div>
 
           <div className="flex flex-col place-items-center justify-start w-full min-h-screen bg-zinc-500 bg-opacity-50 relative max-lg:hidden">
-            <Navbar  data={result.data[0]} />
+            <Navbar data={result.data[0]} />
             <div className="w-full flex justify-center py-4">{children}</div>
           </div>
           <Sonner />
