@@ -45,7 +45,6 @@ export default function Transactions() {
   const vehiclesCart = useSelector(
     (state: any) => state.requestCart.vehiclesCart
   );
-  console.log(allFoodSupplies);
 
   // dispatch(setBranchesData(branchesData));
 

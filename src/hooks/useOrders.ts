@@ -12,19 +12,6 @@ export const useRequests: any = () => {
   const createRequest = async (props: any, duration?: any) => {
     console.log("Props:", props); // Log the props object
 
-    // Check if the employees_id exists in the "employees" table
-    const { data: employeeData, error: employeeError } = await supabase
-      .from("employees")
-      .select("id")
-      .eq("id", props.employees_id);
-
-    console.log("Employee Data:", employeeData); // Log the employee data
-
-    if (employeeError || !employeeData.length) {
-      console.error("Employee Error:", employeeError); // Log the employee error
-      return { error: "Invalid employees_id" };
-    }
-
     const result: any = await supabase
       .from("requests")
       .insert({
@@ -34,49 +21,42 @@ export const useRequests: any = () => {
         status: "Ongoing",
         coordinates: props.coordinates,
         calamity_type: props.calamity_type,
-        employees_id: props.employees_id,
+        employees_id: props.employee_id,
       })
       .select();
 
-    console.log("Insert Result:", result); // Log the insert result
+    console.log(result); // Log the insert result
 
     if (result.error) {
-      console.error("Insert Error:", result.error); // Log the insert error
+      console.error(result.error); // Log the insert error
       return result.error;
     }
 
     const foodsupplyResult = await supabase
       .from("use_foodsupplies")
       .insert(
-        props.use_foodsupply.map((foodsupply: any) => ({
+        props.use_foodsupplies.map((foodsupply: any) => ({
           request_id: result.data[0].id,
           foodsupply_id: foodsupply.foodsupply_id,
           name: foodsupply.name,
           description: foodsupply.description,
-          image_url: foodsupply.image,
           quantity: foodsupply.quantity,
         }))
       )
       .select();
 
-    console.log("Food Supply Result:", foodsupplyResult); // Log the food supply result
-
     const vehicleResult = await supabase
       .from("use_vehicles")
       .insert(
-        props.use_vehicle.map((vehicle: any) => ({
+        props.use_vehicles.map((vehicle: any) => ({
           request_id: result.data[0].id,
           vehicle_id: vehicle.vehicle_id,
           name: vehicle.name,
           description: vehicle.description,
-          platenumber: vehicle.plate_number,
-          image_url: vehicle.image,
           quantity: vehicle.quantity,
         }))
       )
       .select();
-
-    console.log("Vehicle Result:", vehicleResult); // Log the vehicle result
 
     const EquipmentResult = await supabase
       .from("use_equipments")
@@ -86,13 +66,10 @@ export const useRequests: any = () => {
           equipment_id: equipment.equipment_id,
           name: equipment.name,
           description: equipment.description,
-          image_url: equipment.image,
           quantity: equipment.quantity,
         }))
       )
       .select();
-
-    console.log("Equipment Result:", EquipmentResult); // Log the equipment result
 
     await new Promise((resolve) => setTimeout(resolve, duration));
 
@@ -100,23 +77,19 @@ export const useRequests: any = () => {
   };
 
   const getRequests = async (props?: any) => {
-    if (props?.roles?.role !== "Administrator") {
-      return;
-    }
-
-    const { data, error } = await supabase
+    const result = await supabase
       .from("requests")
       .select(
-        "id,created_at, status, requester_first_name, requester_last_name, coordinates, employees(id, first_name, last_name, image_url, contact_number, email, roles(role)), calamity_type,"
+        "*, employees(*, roles(*)), use_foodsupplies(*), use_equipments(*), use_vehicles(*)"
       )
       .order("created_at", { ascending: false });
 
-    console.log("Get Requests Data:", data); // Log the get requests data
-
-    if (error) {
-      console.error("Get Requests Error:", error); // Log the get requests error
-      return error;
+    if (result.error) {
+      console.error("Get Requests Error:", result.error); // Log the get requests error
+      return result.error;
     }
+
+    const { data, error } = result;
 
     return setRequestsData(data);
   };
