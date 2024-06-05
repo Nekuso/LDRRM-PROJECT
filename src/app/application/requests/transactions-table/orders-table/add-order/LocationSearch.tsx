@@ -7,6 +7,7 @@ import { icon, Icon } from "leaflet";
 import { Input } from "@/components/ui/input";
 import { Button } from "antd";
 import { LatLngBoundsLiteral, LatLngTuple } from "leaflet";
+import { debounce } from "lodash";
 
 const Route = ({ route }: { route: [number, number][] | null }) => {
   const map = useMap();
@@ -261,6 +262,23 @@ export const LocationSearch = ({ control }: { control: any }) => {
     }
   }, [currentPosition, endPosition]);
 
+  //debugging zone
+  const debouncedUpdateEndPosition = debounce((value: string) => {
+    const coordinates = value.split(",").map(Number);
+    if (coordinates.length === 2) {
+      setEndPosition(coordinates as [number, number]);
+    }
+  }, 5000);
+
+  // const resetMap = () => {
+  //   setEndPosition(null); // Reset the end position
+  //   // setTracking(false); // Stop tracking
+  //   // setCurrentPosition(null); // Remove the device's current location marker
+  //   setRoute(null); // Remove the route
+  // };
+
+  //debugging zone
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -290,6 +308,7 @@ export const LocationSearch = ({ control }: { control: any }) => {
                 {...field}
                 type="text"
                 placeholder="End Coordinates"
+                onChange={(e) => debouncedUpdateEndPosition(e.target.value)}
                 value={endPosition ? endPosition.join(", ") : ""}
                 readOnly
               />
@@ -322,6 +341,12 @@ export const LocationSearch = ({ control }: { control: any }) => {
         >
           START
         </Button>
+        {/* <Button
+          className="items-center whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2 text-xs font-bold rounded-lg min-w-[105px] flex justify-center place-items-center gap-2 bg-primary/90 hover:bg-primary primary-glow transition-all duration-300"
+          onClick={resetMap}
+        >
+          Reset Map
+        </Button> */}
         {/* <button
           onClick={stopTracking}
           className="items-center whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2 text-xs font-bold rounded-lg min-w-[105px] flex justify-center place-items-center gap-2 bg-primary/90 hover:bg-primary primary-glow transition-all duration-300"
