@@ -23,9 +23,9 @@ type option = {
 
 export const initiateColumns = (dispatch: any, foodsuppliesCart: any) => {
   const columns: ColumnDef<option>[] = [
+    // ... other columns
     {
-      id: "name",
-      accessorKey: "name",
+      id: "vehicles",
       header: "Food Supply",
       cell: ({ row }) => {
         return (
@@ -44,9 +44,6 @@ export const initiateColumns = (dispatch: any, foodsuppliesCart: any) => {
               <p className="text-xs max-w-[100px] 2xl:max-w-[200px] truncate font-semibold ">
                 {row.original.name}
               </p>
-              {/* <p className="text-sx max-w-[120px] 2xl:max-w-[180px] truncate text-white font-bold">
-                {`₱ ${row.original.price} • ${row.original.brands.brand_name}`}
-              </p> */}
               <p className="text-xs max-w-[181px] truncate text-slate-500">
                 Stock:
                 <span
@@ -66,73 +63,53 @@ export const initiateColumns = (dispatch: any, foodsuppliesCart: any) => {
     },
     {
       id: "actions",
-      header: () => {
-        return <div className="w-full text-right">Action</div>;
-      },
+      header: () => <div className="text-right pr-8">Actions</div>,
       cell: ({ row }) => {
         return (
-          <div className="w-full flex gap-2 justify-end">
-            <Button
-              className={cn(
-                "text-xs font-bold rounded-md flex gap-2 hover:text-white transition-all duration-300 px-6 py-2 cursor-pointer",
-                row.original.stock_quantity === 0
-                  ? "bg-blue-600"
-                  : "bg-applicationPrimary hover:bg-applicationPrimary/70"
-              )}
-              type="button"
-              disabled={
-                foodsuppliesCart.some(
-                  (foodsupply: any) =>
-                    foodsupply.foodsupply_id === row.original.id
-                ) || row.original.stock_quantity === 0
-              }
-              onClick={() => {
-                dispatch(
-                  addFoodSupplyToCart({
-                    foodsupply_id: row.original.id,
-                    // inventory_id: row.original.inventory.id,
-                    name: row.original.name,
-                    description: row.original.description,
-                    image: row.original.image_url,
-                    quantity: 1,
-                  })
-                );
-              }}
-            >
-              <div
-                className={cn(
-                  "rounded-md text-white bg-blue-600 px-4 py-2 text-base",
-                  foodsuppliesCart.some(
-                    (foodsupply: any) =>
-                      foodsupply.foodsupply_id === row.original.id
-                  )
-                    ? "Added"
-                    : row.original.stock_quantity === 0
-                    ? "Out of Stock"
-                    : "Add"
-                )}
-              >
-                {foodsuppliesCart.some(
-                  (foodsupply: any) =>
-                    foodsupply.foodsupply_id === row.original.id
-                )
-                  ? "Added"
-                  : row.original.stock_quantity === 0
-                  ? "Out of Stock"
-                  : "Add"}
-              </div>
-            </Button>
+          <div className="w-full flex gap-4 justify-end">
             {foodsuppliesCart.some(
               (foodsupply: any) => foodsupply.foodsupply_id === row.original.id
-            ) && (
+            ) ? (
               <Button
-                className="text-xs font-bold rounded-md flex gap-2 hover:text-white transition-all duration-300 px-4 py-2 cursor-pointer"
+                className="text-xs font-bold rounded-md flex gap-2 hover:text-white transition-all duration-300 px-4 py-2 cursor-pointer bg-red-500 hover:bg-red-00"
                 type="button"
                 onClick={() => {
                   dispatch(removeFoodSupplyFromCart(row.original.id));
                 }}
               >
                 <IoMdRemove />
+              </Button>
+            ) : (
+              <Button
+                className={cn(
+                  "text-xs font-bold rounded-md flex gap-2 hover:text-white transition-all duration-300 px-6 py-2 cursor-pointer",
+                  row.original.stock_quantity === 0
+                    ? "bg-blue-600"
+                    : "bg-applicationPrimary hover:bg-applicationPrimary/70"
+                )}
+                type="button"
+                disabled={row.original.stock_quantity === 0}
+                onClick={() => {
+                  dispatch(
+                    addFoodSupplyToCart({
+                      foodsupply_id: row.original.id,
+                      // inventory_id: row.original.inventory.id,
+                      name: row.original.name,
+                      description: row.original.description,
+                      image: row.original.image_url,
+                      quantity: 1,
+                    })
+                  );
+                }}
+              >
+                <div
+                  className={cn(
+                    "rounded-md text-white bg-blue-600 px-4 py-2 text-base",
+                    row.original.stock_quantity === 0 ? "Out of Stock" : "Add"
+                  )}
+                >
+                  {row.original.stock_quantity === 0 ? "Out of Stock" : "Add"}
+                </div>
               </Button>
             )}
           </div>
