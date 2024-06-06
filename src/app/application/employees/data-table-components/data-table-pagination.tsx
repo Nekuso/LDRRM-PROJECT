@@ -9,11 +9,11 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
-} from "@radix-ui/react-select";
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -28,10 +28,10 @@ export function DataTablePagination<TData>({
         {table.getFilteredRowModel().rows.length} results{" "}
       </span>
       <div className="flex items-center space-x-6 lg:space-x-8">
-        {/* <p className="text-sm font-medium">Rows per page</p> */}
-        {/* <Select */}
         <div className="flex items-center space-x-2">
-          {/* value={`${table.getState().pagination.pageSize}`}
+          <p className="text-sm font-medium">Rows per page</p>
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value));
             }}
@@ -49,9 +49,9 @@ export function DataTablePagination<TData>({
                   {pageSize}
                 </SelectItem>
               ))}
-            </SelectContent> */}
+            </SelectContent>
+          </Select>
         </div>
-        {/* </Select> */}
 
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
           Page {table.getState().pagination.pageIndex + 1} of{" "}

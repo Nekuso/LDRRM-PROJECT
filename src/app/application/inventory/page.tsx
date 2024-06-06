@@ -96,20 +96,16 @@ export default function Inventory() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-start place-items-center w-full h-full gap-0 p-0">
-      <div className="space-y-2 w-[90%] h-fit bg-opacity-85 p-4 rounded-2xl">
-        <div className="w-full flex justify-center py-3.5 no-scrollbar ">
-          {allFoodSupplies.length === 0 ? (
-            <Loading />
-          ) : (
-            <InventoryContent
-              dataFood_supplies={allFoodSupplies}
-              dataEquipments={equipmentsData}
-              dataVehicles={vehiclesData}
-            />
-          )}
-        </div>
-      </div>
+    <div className="w-full flex justify-center py-3.5 no-scrollbar ">
+      {allFoodSupplies.length === 0 ? (
+        <Loading />
+      ) : (
+        <InventoryContent
+          dataFood_supplies={allFoodSupplies}
+          dataEquipments={equipmentsData}
+          dataVehicles={vehiclesData}
+        />
+      )}
     </div>
   );
 }

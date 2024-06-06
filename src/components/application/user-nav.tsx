@@ -46,12 +46,18 @@ export function UserNav({ data }: any) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="w-12 h-12 cursor-pointer rounded-lg shadow-2xl duration-300">
-            <AvatarImage
-              src={data.image_url}
-              className=" shadow-2xl rounded-md duration-300"
-            />
+        <Button variant="ghost" className="relative">
+          <Avatar className="cursor-pointer rounded-lg duration-300 flex items-center w-full">
+            <div className="relative group flex items-center">
+              <img
+                src="/icons/icons8-user-circle-24.png"
+                alt="Dashboard Icon"
+                className="shadow-2xl rounded-md duration-300"
+              />
+              <span className="text-sm leading-5 w-full text-black mx-2">
+                My Profile
+              </span>
+            </div>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

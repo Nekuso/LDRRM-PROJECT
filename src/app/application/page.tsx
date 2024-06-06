@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Card,
   CardContent,
@@ -61,10 +62,10 @@ const widgetsData = [
 
 export default function Page() {
   return (
-    <div className="flex flex-col justify-start place-items-center w-full h-full gap-7 p-8">
-      <div className="space-y-2 w-[90%] h-fit">
-        <div className="flex flex-col justify-center place-items-center w-full gap-7 p-0">
-          <div className="w-[90%] h-[20%] flex gap-4 ">
+    <div className="w-full h-[805px] 2xl:h-[882px] flex justify-center place-items-center py-4">
+      <div className="w-full h-full max-w-[1840px] flex justify-between gap-6">
+        <div className="w-full h-full flex flex-col justify-between gap-6">
+          <div className="w-full h-[30%] max-h-[35%] flex justify-between gap-6 ">
             {widgetsData.map((data, i) => (
               <Card key={i} className="w-full ">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -80,7 +81,7 @@ export default function Page() {
               </Card>
             ))}
           </div>
-          <div className="w-[90%] flex gap-4">
+          <div className="w-[100%] flex gap-4">
             <Card className="w-full h-fit flex flex-col">
               <CardHeader>
                 <CardTitle>Activity Logs</CardTitle>
@@ -92,7 +93,7 @@ export default function Page() {
             <Card className="w-[35%] min-h-[508.5px]">
               <CardHeader>
                 <CardTitle>Employees</CardTitle>
-                {/* <CardDescription>People who are working</CardDescription> */}
+                <CardDescription>People who are working</CardDescription>
               </CardHeader>
               <CardContent>
                 <RecentSales />

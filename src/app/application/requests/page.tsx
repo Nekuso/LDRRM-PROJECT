@@ -124,16 +124,12 @@ export default function Transactions() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-start place-items-center w-full h-full gap-0 p-0">
-      <div className="space-y-2 w-[90%] h-fit bg-opacity-85 p-4 rounded-2xl">
-        <div className="w-full flex justify-center py-3.5 no-scrollbar ">
-          {/* {requestsData.length === 0 ? (
-            <Loading />
-          ) : (
-          )} */}
-          <TransactionsContent dataRequests={requestsData} />
-        </div>
-      </div>
+    <div className="w-full flex justify-center py-3.5 no-scrollbar ">
+      {requestsData.length === 0 ? (
+        <Loading />
+      ) : (
+        <TransactionsContent dataRequests={requestsData} />
+      )}
     </div>
   );
 }

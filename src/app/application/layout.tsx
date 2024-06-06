@@ -59,15 +59,15 @@ export default async function RootLayout({
     <html lang="en">
       <Providers>
         <body className={cn("font-sora", sora.variable)}>
-          <div className="w-full min-h-screen hidden bg-red-900 max-lg:flex justify-center place-items-center">
-            <h1 className="text-2xl text-white">
-              Abrihi sa computer palihog gaw
+          <div className="w-full min-h-screen hidden bg-stone-900/10 max-lg:flex justify-center place-items-center">
+            <h1 className="text-3xl text-slate-900 font-semibold">
+              Please use a larger screen to view this page{" "}
             </h1>
           </div>
 
-          <div className="flex flex-col place-items-center justify-start w-full min-h-screen bg-zinc-500 bg-opacity-50 relative max-lg:hidden">
+          <div className="relative flex place-items-start justify-center w-full min-h-screen h-screen bg-darkBg px-8 gap-10 max-lg:hidden overflow-y-scroll overflow-x-hidden no-scrollbar">
             <Navbar data={result.data[0]} />
-            <div className="w-full flex justify-center py-4">{children}</div>
+            {children}
           </div>
           <Sonner />
           <Toaster />

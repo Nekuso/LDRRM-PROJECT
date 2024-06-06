@@ -27,10 +27,10 @@ export default function InventoryContent({
   return (
     <Tabs
       defaultValue="requests"
-      className="w-full flex max-w-[1580px] flex-col justify-center place-items-center"
+      className="w-full flex max-w-[1840px] flex-col justify-center place-items-center gap-1"
     >
-      <div className="w-full">
-        <TabsList className="h-fit rounded-lg gap-2 bg-white">
+      <div className="w-full flex justify-between">
+        <TabsList className="h-fit bg-darkComponentBg border border-lightBorder rounded-lg gap-2">
           <TabsTrigger
             value="requests"
             className="data-[state=active]:bg- data-[state=inactive]:hover:bg-/80

@@ -8,10 +8,10 @@ export default function Page({ dataEmployees, allRoles }: any) {
   return (
     <Tabs
       defaultValue="Employees"
-      className="w-full flex max-w-[1580px] flex-col justify-center place-items-center"
+      className="w-full flex max-w-[1840px] flex-col justify-center place-items-center gap-3"
     >
-      <div className="w-full">
-        <TabsList className="text-muted-foreground items-center justify-center inline-flex h-fit rounded-lg pt-1 bg-white mb-2">
+      <div className="w-full flex justify-between">
+        <TabsList className="h-fit bg-darkComponentBg border border-lightBorder rounded-lg gap-2">
           <TabsTrigger
             value="Employees"
             className="data-[state=active]:bg- data-[state=inactive]:hover:bg-/80
