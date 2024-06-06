@@ -254,7 +254,7 @@ export default function EmployeeForm({ setDialogOpen }: any) {
                   name="role"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-xs">Role</FormLabel>
+                      <FormLabel className="text-xs">Job title</FormLabel>
                       <RoleInput data={field} />
                       <FormMessage />
                     </FormItem>

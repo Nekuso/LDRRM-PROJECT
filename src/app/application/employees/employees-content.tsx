@@ -8,7 +8,7 @@ export default function Page({ dataEmployees, allRoles }: any) {
   return (
     <Tabs
       defaultValue="Employees"
-      className="w-full flex max-w-[1840px] flex-col justify-center place-items-center gap-3"
+      className="w-full flex max-w-[1840px] flex-col justify-center place-items-center gap-4"
     >
       <div className="w-full flex justify-between">
         <TabsList className="h-fit bg-darkComponentBg border border-lightBorder rounded-lg gap-2">

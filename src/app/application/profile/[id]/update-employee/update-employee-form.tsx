@@ -173,7 +173,7 @@ export default function EmployeeForm({
                   name="role"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-xs">Role</FormLabel>
+                      <FormLabel className="text-xs">Job title</FormLabel>
                       <RoleInput data={field} rolesData={roles} />
                       <FormMessage />
                     </FormItem>

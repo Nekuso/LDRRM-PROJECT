@@ -242,7 +242,7 @@ export const columns: ColumnDef<EmployeesDisplay>[] = [
       }
 
       return (
-        <div className="flex w-[150px] items-center">
+        <div className="flex w-full items-center">
           <p
             className={`w-fit text-xs font-normal flex place-items-center gap-2 truncate text-white px-2 py-1 rounded-3xl ${statusColor}`}
           >
