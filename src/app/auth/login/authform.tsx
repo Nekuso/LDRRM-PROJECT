@@ -110,18 +110,7 @@ export function Authform() {
               />
             </div>
           </CardContent>
-
-          <CardFooter className="flex justify-between items-center">
-            <div className="text-black text-xs flex gap-3">
-              Issues logging in?{" "}
-              <Link
-                href="#"
-                className="text-xs font-bold underline underline-offset-4"
-              >
-                Contact support
-              </Link>
-            </div>
-            {/* <Accadminreq /> */}
+          <CardFooter className="flex justify-center items-center">
             <Button type="submit">
               <span className={cn({ hidden: isPending })}>Login</span>
               <AiOutlineLoading3Quarters
@@ -134,3 +123,16 @@ export function Authform() {
     </Card>
   );
 }
+
+// <CardFooter className="flex justify-between items-center">
+//   <div className="text-black text-xs flex gap-3">
+//     Issues logging in?{" "}
+//     <Link
+//       href="#"
+//       className="text-xs font-bold underline underline-offset-4"
+//     >
+//       Contact support
+//     </Link>
+//   </div>
+//   {/* <Accadminreq /> */}
+// </CardFooter>
