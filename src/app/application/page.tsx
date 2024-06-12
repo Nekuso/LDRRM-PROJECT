@@ -105,3 +105,39 @@ export default function Page() {
     </div>
   );
 }
+
+// import React, { useEffect, useState } from "react";
+// import { createClient } from "@supabase/supabase-js";
+
+// // Initialize Supabase client
+// const supabaseUrl = "YOUR_SUPABASE_URL";
+// const supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY";
+// const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// export default function Page() {
+//   const [totalMobileUsers, setTotalMobileUsers] = useState(0);
+
+//   useEffect(() => {
+//     const fetchTotalMobileUsers = async () => {
+//       const { data, error } = await supabase
+//         .from("mobile_users")
+//         .select("*", { count: "exact" });
+
+//       if (error) {
+//         console.error("Error fetching total mobile users:", error);
+//         return;
+//       }
+
+//       setTotalMobileUsers(data.length);
+//     };
+
+//     fetchTotalMobileUsers();
+//   }, []);
+
+//   return (
+//     <div>
+//       {/* Your existing component structure */}
+//       <div>Total Mobile Users: {totalMobileUsers}</div>
+//     </div>
+//   );
+// }
