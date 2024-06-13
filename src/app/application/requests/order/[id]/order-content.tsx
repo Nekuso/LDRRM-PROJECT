@@ -32,7 +32,7 @@ import { SiTemporal } from "react-icons/si";
 import { BsBoxes } from "react-icons/bs";
 import { cn } from "@/lib/utils";
 
-export default function RequestContent({ request }: any) {
+export default function RequestContent({ requests }: any) {
   // const contentToPrint = useRef(null);
   // const handlePrint = useReactToPrint({
   //   documentTitle: "Print This Document",
@@ -48,6 +48,7 @@ export default function RequestContent({ request }: any) {
   // useEffect(() => {
   //   handlePrint(null, () => contentToPrint.current);
   // }, []);
+  console.log(requests);
 
   return (
     <div className="w-full h-[805px] 2xl:h-[882px] flex max-w-[1840px] justify-center place-items-start gap-4 ">
@@ -62,10 +63,10 @@ export default function RequestContent({ request }: any) {
               Use FoodSupply
             </AccordionTrigger>
             <AccordionContent className="rounded-xl">
-              {request && request.length > 0 && (
+              {requests && requests.length > 0 && (
                 <FoodSupplyRequests
                   columns={initiateFoodSupplyRequestsColumns()}
-                  data={request[0].use_foodsupplies}
+                  data={requests[0].use_foodsupplies}
                 />
               )}
             </AccordionContent>
@@ -75,10 +76,10 @@ export default function RequestContent({ request }: any) {
               Use Equipment
             </AccordionTrigger>
             <AccordionContent className="bg-darkComponentBg rounded-xl">
-              {request && request.length > 0 && (
+              {requests && requests.length > 0 && (
                 <EquipmentRequest
                   columns={initiateEquipmentRequestsColumns()}
-                  data={request[0].use_equipments}
+                  data={requests[0].use_equipments}
                 />
               )}
             </AccordionContent>
@@ -88,10 +89,10 @@ export default function RequestContent({ request }: any) {
               Use Vehicles
             </AccordionTrigger>
             <AccordionContent className="bg-darkComponentBg rounded-xl">
-              {request && request.length > 0 && (
+              {requests && requests.length > 0 && (
                 <VehicleRequest
                   columns={initiateVehiclesRequestsColumns()}
-                  data={request[0].use_vehicles}
+                  data={requests[0].use_vehicles}
                 />
               )}
             </AccordionContent>
@@ -103,25 +104,25 @@ export default function RequestContent({ request }: any) {
           <div className="flex flex-col justify-between gap-2">
             <div className="w-full flex justify-between">
               <h2 className="text-xl font-bold">Request Details</h2>
-              {request && request.length > 0 && (
-                <UpdateRequestStatusButton requestData={request[0]} />
+              {requests && requests.length > 0 && (
+                <UpdateRequestStatusButton requestData={requests[0]} />
               )}
             </div>
-            {request && request.length > 0 && (
+            {requests && requests.length > 0 && (
               <p className="text-xs 2xl:text-sm text-gray-600">
-                Request ID: {request[0].id}
+                Request ID: {requests[0].id}
               </p>
             )}
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-between">
               <p className="text-xs 2xl:text-sm text-gray-600">
-                requester Name
+                Requester Name
               </p>
-              {request && request.length > 0 && (
-                <p className="text-xs 2xl:text-sm text-slate-50">
-                  {request[0].requester_first_name}{" "}
-                  {request[0].requester_last_name}
+              {requests && requests.length > 0 && (
+                <p className="text-xs 2xl:text-sm text-black">
+                  {requests[0].requester_first_name}{" "}
+                  {requests[0].requester_last_name}
                 </p>
               )}
             </div>
@@ -129,95 +130,88 @@ export default function RequestContent({ request }: any) {
               <p className="text-xs 2xl:text-sm text-gray-600">
                 Contact Number
               </p>
-              {request && request.length > 0 && (
-                <p className="text-xs 2xl:text-sm text-slate-50">
-                  {request[0].requester_contact_number}
+              {requests && requests.length > 0 && (
+                <p className="text-xs 2xl:text-sm text-">
+                  {requests[0].requester_contact_number}
                 </p>
               )}
             </div>
-            {request && request.length > 0 && (
-              <div className="flex justify-between">
-                <p className="text-xs 2xl:text-sm text-gray-600">Email</p>
-                <p className="text-xs 2xl:text-sm text-slate-50">
-                  {request[0].requester_email}
-                </p>
-              </div>
-            )}
-
-            {request && request.length > 0 && (
+            {requests && requests.length > 0 && (
               <div className="flex justify-between">
                 <p className="text-xs 2xl:text-sm text-gray-600">Status</p>
                 <p className="text-xs 2xl:text-sm text-slate-50">
-                  {request[0].status}
+                  {requests[0].status}
                 </p>
               </div>
             )}
 
-            {request && request.length > 0 && (
+            {requests && requests.length > 0 && (
               <div className="flex justify-between">
                 <p className="text-xs 2xl:text-sm text-gray-600">Staff</p>
                 <p className="text-xs 2xl:text-sm text-slate-50">
-                  {request[0].employees.first_name}
+                  {requests[0].employees.first_name}
                 </p>
               </div>
             )}
 
-            {request && request.length > 0 && (
+            {requests && requests.length > 0 && (
               <div className="flex justify-between">
                 <p className="text-xs 2xl:text-sm text-gray-600">Created At</p>
                 <p className="text-xs 2xl:text-sm text-slate-50">
-                  {format(new Date(request[0].created_at), "PPPP")}
+                  {format(new Date(requests[0].created_at), "PPPP")}
                 </p>
               </div>
             )}
           </div>
           <Separator className="bg-slate-400" />
           <div className="flex flex-col gap-3">
-            {request && request.length > 0 && request[0].use_foodsupplies && (
-              <div className="flex justify-between">
-                <p className="text-xs 2xl:text-sm text-gray-600">
-                  foodsupplies Total
-                </p>
-                <p className="text-xs 2xl:text-sm text-slate-50">
-                  {" "}
-                  {request[0].use_foodsupplies
-                    .reduce((acc: any, item: any) => acc + item.quantity, 0)
-                    .toFixed(2)}
-                </p>
-              </div>
-            )}
+            {requests &&
+              requests.length > 0 &&
+              requests[0].use_foodsupplies && (
+                <div className="flex justify-between">
+                  <p className="text-xs 2xl:text-sm text-gray-600">
+                    foodsupplies Total
+                  </p>
+                  <p className="text-xs 2xl:text-sm text-slate-50">
+                    {" "}
+                    {requests[0].use_foodsupplies
+                      .reduce((acc: any, item: any) => acc + item.quantity, 0)
+                      .toFixed(2)}
+                  </p>
+                </div>
+              )}
 
-            {request && request.length > 0 && request[0].use_equipments && (
+            {requests && requests.length > 0 && requests[0].use_equipments && (
               <div className="flex justify-between">
                 <p className="text-xs 2xl:text-sm text-gray-600">
                   equipments Total
                 </p>
                 <p className="text-xs 2xl:text-sm text-slate-50">
                   {" "}
-                  {request[0].use_equipments
+                  {requests[0].use_equipments
                     .reduce((acc: any, item: any) => acc + item.quantity, 0)
                     .toFixed(2)}
                 </p>
               </div>
             )}
 
-            {request && request.length > 0 && request[0].discount && (
+            {requests && requests.length > 0 && requests[0].discount && (
               <div className="flex justify-between">
                 <p className="text-xs 2xl:text-sm text-gray-600">
-                  Discount ({request[0].discount}%)
+                  Discount ({requests[0].discount}%)
                 </p>
                 <p className="text-xs 2xl:text-sm text-slate-50">
                   -{" "}
                   {(
-                    (request[0].use_foodsupplies.reduce(
+                    (requests[0].use_foodsupplies.reduce(
                       (acc: any, item: any) => acc + item.quantity,
                       0
                     ) +
-                      request[0].use_equipments.reduce(
+                      requests[0].use_equipments.reduce(
                         (acc: any, item: any) => acc + item.quantity,
                         0
                       )) *
-                    (request[0].discount / 100)
+                    (requests[0].discount / 100)
                   ).toFixed(2)}
                 </p>
               </div>
@@ -226,12 +220,12 @@ export default function RequestContent({ request }: any) {
 
           <Separator className="bg-slate-400 " />
           <div className="flex flex-col gap-3">
-            {request && request[0] && (
+            {requests && requests[0] && (
               <>
                 <div className="flex justify-between">
                   <p className="text-xs 2xl:text-sm text-gray-600">Total</p>
                   <p className="text-md 2xl:text-lg text-slate-50 font-bold">
-                    {request[0].total_price.toFixed(2)}
+                    {requests[0].total_price.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between">
@@ -239,33 +233,19 @@ export default function RequestContent({ request }: any) {
                     Amount Paid
                   </p>
                   <p className="text-xs 2xl:text-sm text-slate-50">
-                    - {request[0].amount_paid.toFixed(2)}
+                    - {requests[0].amount_paid.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-xs 2xl:text-sm text-gray-600">Change</p>
                   <p className="text-xs 2xl:text-sm text-slate-50">
                     {" "}
-                    {(request[0].amount_paid - request[0].total_price).toFixed(
-                      2
-                    )}
+                    {(
+                      requests[0].amount_paid - requests[0].total_price
+                    ).toFixed(2)}
                   </p>
                 </div>
               </>
-            )}
-          </div>
-          <div className="w-full max-w-full flex flex-col place-items-center gap-4">
-            {request && request[0] && (
-              <Barcode
-                value={request[0].id ? request[0].id : "No Barcode"}
-                displayValue={false}
-                background="transparent"
-                lineColor="white"
-                width={1}
-                height={70}
-                margin={0}
-                renderer="img"
-              />
             )}
           </div>
         </div>
@@ -296,25 +276,25 @@ export default function RequestContent({ request }: any) {
 
           <div className="w-full flex flex-col gap-1">
             <div className="w-full flex flex-col gap-1">
-              {request && request[0] && (
+              {requests && requests[0] && (
                 <>
                   <div className="flex flex-col justify-between gap-1">
                     <h2 className="flex gap-1 place-items-center text-sm font-bold text-black space-mono-regular tracking-tighter">
                       {/* <FiBox /> */}
-                      request Details
+                      requests Details
                     </h2>
                     <p className="text-[8px] font-semibold text-black space-mono-regular tracking-tighter">
-                      {`ID: ${request[0].id}`}
+                      {`ID: ${requests[0].id}`}
                     </p>
                   </div>
                   <div className="flex flex-col gap-1">
                     <div className="flex justify-between">
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        requester Name
+                        requestser Name
                       </p>
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].requester_first_name}{" "}
-                        {request[0].requester_last_name}
+                        {requests[0].requester_first_name}{" "}
+                        {requests[0].requester_last_name}
                       </p>
                     </div>
                     <div className="flex justify-between">
@@ -322,7 +302,7 @@ export default function RequestContent({ request }: any) {
                         Contact Number
                       </p>
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].requester_contact_number}
+                        {requests[0].requester_contact_number}
                       </p>
                     </div>
                     <div className="flex justify-between">
@@ -330,24 +310,7 @@ export default function RequestContent({ request }: any) {
                         Email
                       </p>
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].requester_email}
-                      </p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        Branch
-                      </p>
-                      <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].inventory.branches.branch_name}
-                      </p>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        Payment Method
-                      </p>
-                      <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].payment_method}
+                        {requests[0].requester_email}
                       </p>
                     </div>
                     <div className="flex justify-between">
@@ -355,7 +318,7 @@ export default function RequestContent({ request }: any) {
                         Status
                       </p>
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].status}
+                        {requests[0].status}
                       </p>
                     </div>
                     <div className="flex justify-between">
@@ -363,7 +326,7 @@ export default function RequestContent({ request }: any) {
                         Cashier
                       </p>
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {request[0].employees.first_name}
+                        {requests[0].employees.first_name}
                       </p>
                     </div>
                     <div className="flex justify-between">
@@ -371,7 +334,7 @@ export default function RequestContent({ request }: any) {
                         Created At
                       </p>
                       <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
-                        {format(new Date(request[0].created_at), "P")}
+                        {format(new Date(requests[0].created_at), "P")}
                       </p>
                     </div>
                   </div>
@@ -386,10 +349,10 @@ export default function RequestContent({ request }: any) {
                   used foodsupplies
                 </p>
               </div>
-              {request &&
-                request[0] &&
-                request[0].use_foodsupplies &&
-                request[0].use_foodsupplies.map((item: any, index: number) => (
+              {requests &&
+                requests[0] &&
+                requests[0].use_foodsupplies &&
+                requests[0].use_foodsupplies.map((item: any, index: number) => (
                   <div key={index} className="flex justify-between">
                     <div className="flex gap-1">
                       <p className="max-w-[95px] truncate text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
@@ -411,10 +374,10 @@ export default function RequestContent({ request }: any) {
                 </p>
                 <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                   {" "}
-                  {request &&
-                    request[0] &&
-                    request[0].use_foodsupplies &&
-                    request[0].use_foodsupplies
+                  {requests &&
+                    requests[0] &&
+                    requests[0].use_foodsupplies &&
+                    requests[0].use_foodsupplies
                       .reduce((acc: any, item: any) => acc + item.quantity, 0)
                       .toFixed(2)}
                 </p>
@@ -427,10 +390,10 @@ export default function RequestContent({ request }: any) {
                     used equipments
                   </p>
                 </div>
-                {request &&
-                  request[0] &&
-                  request[0].use_equipments &&
-                  request[0].use_equipments.map((item: any, index: number) => (
+                {requests &&
+                  requests[0] &&
+                  requests[0].use_equipments &&
+                  requests[0].use_equipments.map((item: any, index: number) => (
                     <div key={index} className="flex justify-between">
                       <div className="flex gap-1">
                         <p className="max-w-[95px] truncate text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
@@ -453,10 +416,10 @@ export default function RequestContent({ request }: any) {
                   </p>
                   <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                     {" "}
-                    {request &&
-                      request[0] &&
-                      request[0].use_equipments &&
-                      request[0].use_equipments
+                    {requests &&
+                      requests[0] &&
+                      requests[0].use_equipments &&
+                      requests[0].use_equipments
                         .reduce((acc: any, item: any) => acc + item.quantity, 0)
                         .toFixed(2)}
                   </p>
@@ -471,16 +434,16 @@ export default function RequestContent({ request }: any) {
                 </p>
                 <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                   {" "}
-                  {request &&
-                    request[0] &&
-                    request[0].use_foodsupplies &&
-                    request[0].use_equipments &&
+                  {requests &&
+                    requests[0] &&
+                    requests[0].use_foodsupplies &&
+                    requests[0].use_equipments &&
                     (
-                      request[0].use_foodsupplies.reduce(
+                      requests[0].use_foodsupplies.reduce(
                         (acc: any, item: any) => acc + item.quantity,
                         0
                       ) +
-                      request[0].use_equipments.reduce(
+                      requests[0].use_equipments.reduce(
                         (acc: any, item: any) => acc + item.quantity,
                         0
                       )
@@ -506,27 +469,27 @@ export default function RequestContent({ request }: any) {
               <div className="flex justify-between">
                 <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                   Discount{" "}
-                  {request && request[0] && request[0].discount
-                    ? `(${request[0].discount}%)`
+                  {requests && requests[0] && requests[0].discount
+                    ? `(${requests[0].discount}%)`
                     : ""}
                 </p>
                 <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                   -{" "}
-                  {request &&
-                    request[0] &&
-                    request[0].use_foodsupplies &&
-                    request[0].use_equipments &&
-                    request[0].discount &&
+                  {requests &&
+                    requests[0] &&
+                    requests[0].use_foodsupplies &&
+                    requests[0].use_equipments &&
+                    requests[0].discount &&
                     (
-                      (request[0].use_foodsupplies.reduce(
+                      (requests[0].use_foodsupplies.reduce(
                         (acc: any, item: any) => acc + item.quantity,
                         0
                       ) +
-                        request[0].use_equipments.reduce(
+                        requests[0].use_equipments.reduce(
                           (acc: any, item: any) => acc + item.quantity,
                           0
                         )) *
-                      (request[0].discount / 100)
+                      (requests[0].discount / 100)
                     ).toFixed(2)}
                 </p>
               </div>
@@ -540,8 +503,8 @@ export default function RequestContent({ request }: any) {
                 </p>
                 <p className="text-md 2xl:text-lg text-black space-mono-regular tracking-tighter font-bold">
                   {" "}
-                  {request && request[0] && request[0].total_price
-                    ? request[0].total_price.toFixed(2)
+                  {requests && requests[0] && requests[0].total_price
+                    ? requests[0].total_price.toFixed(2)
                     : "0.00"}
                 </p>
               </div>
@@ -551,8 +514,8 @@ export default function RequestContent({ request }: any) {
                 </p>
                 <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                   -{" "}
-                  {request && request[0] && request[0].amount_paid
-                    ? request[0].amount_paid.toFixed(2)
+                  {requests && requests[0] && requests[0].amount_paid
+                    ? requests[0].amount_paid.toFixed(2)
                     : "0.00"}
                 </p>
               </div>
@@ -562,13 +525,13 @@ export default function RequestContent({ request }: any) {
                 </p>
                 <p className="text-[10px] font-semibold text-black space-mono-regular tracking-tighter">
                   {" "}
-                  {request &&
-                  request[0] &&
-                  request[0].amount_paid &&
-                  request[0].total_price
-                    ? (request[0].amount_paid - request[0].total_price).toFixed(
-                        2
-                      )
+                  {requests &&
+                  requests[0] &&
+                  requests[0].amount_paid &&
+                  requests[0].total_price
+                    ? (
+                        requests[0].amount_paid - requests[0].total_price
+                      ).toFixed(2)
                     : "0.00"}
                 </p>
               </div>
